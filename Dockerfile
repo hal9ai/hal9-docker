@@ -117,3 +117,6 @@ RUN apt install -y build-essential
 RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('jsonlite', 'tidyverse', 'pins', 'torch', 'torchvision', 'tidymodels', 'BiocManager', 'ghql'))"
 RUN R -e "BiocManager::install('plsmod', ask = FALSE)"
 RUN R -e "torch::install_torch(type='cpu')"
+
+# addon packages
+RUN pip3 install pandas pytorch torchvision Pillow
