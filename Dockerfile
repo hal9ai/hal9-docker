@@ -119,4 +119,4 @@ RUN R -e "BiocManager::install('plsmod', ask = FALSE)"
 RUN R -e "torch::install_torch(type='cpu')"
 
 # addon packages
-RUN pip3 install pandas pytorch torchvision Pillow
+RUN pip3 install pandas torch torchvision Pillow
