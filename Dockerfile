@@ -120,4 +120,4 @@ RUN R -e "torch::install_torch(type='cpu')"
 
 # addon packages
 RUN pip3 install pandas torch torchvision Pillow
-RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly'))"
+RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly', 'prospectr', 'h2o'))"
