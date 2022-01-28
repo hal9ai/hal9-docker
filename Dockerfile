@@ -103,7 +103,7 @@ RUN apt install -y software-properties-common
 RUN add-apt-repository -y ppa:deadsnakes/ppa
 RUN apt install -y python3.9
 RUN apt install -y python3-pip
-RUN pip3 install numpy scikit-learn pandas xgboost tensorflow kuti
+RUN pip3 install numpy scikit-learn pandas xgboost tensorflow kuti scipy
 
 # install r package deps (xml, httr)
 RUN apt install -y libxml2-dev libssl-dev
