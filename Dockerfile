@@ -124,3 +124,14 @@ RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages
 RUN pip3 install prophet 
 
 RUN apt install -y default-jre
+
+# install node
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt update
+RUN apt install -y yarn
+RUN apt install --no-install-recommends -y yarn
+RUN yarn --version
+
+# addon packages
+RUN yarn add duckdb
