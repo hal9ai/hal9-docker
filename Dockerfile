@@ -121,7 +121,7 @@ RUN R -e "torch::install_torch(type='cpu')"
 # addon packages
 RUN pip3 install pandas torch torchvision Pillow
 RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly', 'prospectr', 'h2o'))"
-RUN pip3 install prophet statsmodels matplotlib
+RUN pip3 install prophet statsmodels matplotlib numpy==1.21.4 numba==0.53.0
 
 RUN apt install -y default-jre
 
@@ -132,6 +132,3 @@ RUN apt update
 RUN apt install -y yarn
 RUN apt install --no-install-recommends -y yarn
 RUN yarn --version
-
-# addon packages
-RUN yarn add duckdb
