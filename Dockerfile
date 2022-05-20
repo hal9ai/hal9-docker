@@ -25,8 +25,9 @@ LABEL org.label-schema.vcs-url="https://github.com/caffeinelabsllc/hal9" \
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Locales
-RUN apt-get clean && apt-get update
-RUN apt-get install -y --allow-unauthenticated locales
+RUN apt-get clean
+RUN apt-get update --allow-unauthenticated
+RUN apt-get install -y locales
 RUN locale-gen en_US.UTF-8
 
 # Needed for string substitution
