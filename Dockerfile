@@ -24,9 +24,13 @@ LABEL org.label-schema.vcs-url="https://github.com/caffeinelabsllc/hal9" \
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+# workaround for cuda base image https://forums.developer.nvidia.com/t/invalid-public-key-for-cuda-apt-repository/212901/24
+RUN apt-key adv --fetch-keys https://repo.download.nvidia.com/baseos/GPG-KEY-dgx-debian-prod
+RUN apt-get update
+
 # Locales
 RUN apt-get clean
-RUN apt-get update --allow-unauthenticated
+RUN apt-get update
 RUN apt-get install -y locales
 RUN locale-gen en_US.UTF-8
 
