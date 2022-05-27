@@ -130,7 +130,7 @@ RUN R -e "torch::install_torch(type='cpu')"
 # addon packages
 RUN pip3 install pandas torch torchvision Pillow transformers keybert
 RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly', 'prospectr', 'h2o', 'plumber'))"
-RUN pip3 install prophet statsmodels matplotlib numpy==1.21.4 numba==0.53.0 Flask
+RUN pip3 install prophet statsmodels matplotlib numpy==1.21.4 numba==0.53.0 Flask spacy
 
 RUN apt install -y default-jre
 
