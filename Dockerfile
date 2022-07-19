@@ -120,8 +120,7 @@ RUN pip3 install numpy scikit-learn==0.23.2 pandas xgboost tensorflow kuti scipy
 RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz
 RUN gzip -dc Image-ExifTool-12.43.tar.gz | tar -xf -
 RUN cd Image-ExifTool-12.43
-RUN apt install Perl
-RUN perl Makefile.PL
+CMD perl Makefile.PL
 RUN make test
 RUN sudo make install
 RUN cd ..
