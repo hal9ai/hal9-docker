@@ -135,6 +135,16 @@ RUN python3 -m spacy download en_core_web_sm
 
 RUN apt install -y default-jre
 
+#install exiftool and python related packages
+RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz
+RUN gzip -dc Image-ExifTool-12.43.tar.gz | tar -xf -
+RUN cd Image-ExifTool-12.43
+RUN perl Makefile.PL
+RUN make test
+RUN sudo make install
+RUN cd ..
+RUN pip3 install rawpy pyexiftool
+
 # install node
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
