@@ -53,7 +53,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zlib1g-dev \
     wget \
     git \
-    gzip
+    gzip \
+    perl
 
 # chrome headless
 RUN apt-get install -y \
@@ -115,6 +116,17 @@ RUN apt install -y python3.9
 RUN apt install -y python3-pip
 RUN pip3 install numpy scikit-learn==0.23.2 pandas xgboost tensorflow kuti scipy pycaret
 
+#install exiftool and python related packages
+RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz
+RUN gzip -dc Image-ExifTool-12.43.tar.gz | tar -xf -
+RUN cd Image-ExifTool-12.43
+RUN apt install Perl
+RUN perl Makefile.PL
+RUN make test
+RUN sudo make install
+RUN cd ..
+RUN pip3 install rawpy pyexiftool
+
 # install r package deps (xml, httr)
 RUN apt install -y libxml2-dev libssl-dev
 
@@ -136,15 +148,6 @@ RUN python3 -m spacy download en_core_web_sm
 
 RUN apt install -y default-jre
 
-#install exiftool and python related packages
-RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz
-RUN gzip -dc Image-ExifTool-12.43.tar.gz | tar -xf -
-RUN cd Image-ExifTool-12.43
-RUN perl Makefile.PL
-RUN make test
-RUN sudo make install
-RUN cd ..
-RUN pip3 install rawpy pyexiftool
 
 # install node
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
