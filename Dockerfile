@@ -52,7 +52,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     zlib1g-dev \
     wget \
-    git
+    git \
+    gzip
 
 # chrome headless
 RUN apt-get install -y \
