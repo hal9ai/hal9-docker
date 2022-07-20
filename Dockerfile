@@ -114,13 +114,13 @@ RUN apt install -y software-properties-common
 RUN add-apt-repository -y ppa:deadsnakes/ppa
 RUN apt install -y python3.9
 RUN apt install -y python3-pip
-RUN pip3 install numpy scikit-learn==0.23.2 pandas xgboost tensorflow kuti scipy pycaret
+RUN pip3 install numpy scikit-learn pandas xgboost tensorflow scipy pycaret
 
 #install exiftool and python related packages
 RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz
 RUN gzip -dc Image-ExifTool-12.43.tar.gz | tar -xf -
 RUN cd Image-ExifTool-12.43
-CMD perl Makefile.PL
+RUN perl Makefile.PL
 RUN make test
 RUN sudo make install
 RUN cd ..
