@@ -117,13 +117,13 @@ RUN apt install -y python3-pip
 RUN pip3 install numpy scikit-learn pandas xgboost tensorflow scipy pycaret
 
 #install exiftool and python related packages
-RUN wget https://exiftool.org/Image-ExifTool-$VERSION.tar.gz && \
-    tar -xzvf Image-ExifTool-*.tar.gz && \
-    rm -rf Image-ExifTool-*.tar.gz && \
-    cd Image-ExifTool-* && \
+RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz && \
+    tar -xzvf Image-ExifTool-12.43.tar.gz && \
+    rm -rf Image-ExifTool-12.43.tar.gz && \
+    cd Image-ExifTool-12.43 && \
     rm -rf html t Change Makefile.PL MANIFEST META.json META.yml perl-Image-ExifTool.spec README && \
     mv * /usr/local/bin/ && \
-    rm -rf /tmp/Image-ExifTool-*
+    rm -rf /Image-ExifTool-12.43
 RUN pip3 install rawpy pyexiftool
 
 # install r package deps (xml, httr)
