@@ -20,9 +20,9 @@ ENV LC_CTYPE=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     TERM=xterm
 
-LABEL org.label-schema.vcs-url="https://github.com/caffeinelabsllc/hal9" \
-      org.label-schema.vendor="Javier Luraschi" \
-      maintainer="Javier Luraschi <jluraschi@gmail.com>" \
+LABEL org.label-schema.vcs-url="https://github.com/hal9ai/hal9-docker" \
+      org.label-schema.vendor="Hal9 Inc" \
+      maintainer="Javier Luraschi <info@hal9.ai>" \
       com.nvidia.volumes.needed="nvidia_driver"
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -155,3 +155,13 @@ RUN apt update
 RUN apt install -y yarn
 RUN apt install --no-install-recommends -y yarn
 RUN yarn --version
+
+# install rust
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# download and build backend
+RUN git clone https://github.com/hal9ai/hal9 h9backend
+RUN cd h9backend/server
+RUN /root/.cargo/bin/cargo build
+RUN cd ../..
