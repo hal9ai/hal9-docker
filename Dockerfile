@@ -162,6 +162,4 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 # download and build backend
 RUN git clone https://github.com/hal9ai/hal9 h9backend
-RUN cd h9backend/server
-RUN /root/.cargo/bin/cargo build
-RUN cd ../..
+RUN /root/.cargo/bin/cargo build --manifest-path=h9backend/server/Cargo.toml
