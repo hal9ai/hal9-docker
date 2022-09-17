@@ -135,7 +135,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD5
 RUN add-apt-repository -y 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/'
 RUN apt install -y r-base
 RUN apt install -y build-essential
-RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('jsonlite', 'tidyverse', 'pins', 'torch', 'torchvision', 'tidymodels', 'BiocManager', 'ghql'))"
+RUN R -e "options(repos = c(REPO_NAME = "https://packagemanager.rstudio.com/all/__linux__/focal/latest")); install.packages(c('jsonlite', 'tidyverse', 'pins', 'torch', 'torchvision', 'tidymodels', 'BiocManager', 'ghql'))"
 RUN R -e "BiocManager::install('plsmod', ask = FALSE)"
 RUN R -e "torch::install_torch(type='cpu')"
 
