@@ -161,5 +161,6 @@ RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
 # download and build backend
+RUN echo 'version 0.0.1'
 RUN git clone https://github.com/hal9ai/hal9 h9backend
 RUN /root/.cargo/bin/cargo build --manifest-path=h9backend/server/Cargo.toml
