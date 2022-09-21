@@ -141,7 +141,7 @@ RUN R -e "torch::install_torch(type='cpu')"
 
 # addon packages
 RUN pip3 install pandas torch torchvision Pillow transformers keybert pytorch-lightning
-RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly', 'prospectr', 'h2o', 'plumber'))"
+RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly', 'prospectr', 'h2o', 'plumber', 'leaflet'))"
 RUN pip3 install prophet statsmodels matplotlib numpy==1.21.4 numba==0.53.0 Flask spacy yfinance mediapipe praw psaw
 RUN python3 -m spacy download en_core_web_sm
 
@@ -159,8 +159,3 @@ RUN yarn --version
 # install rust
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
-
-# download and build backend
-RUN git clone https://github.com/hal9ai/hal9 h9backend
-RUN /root/.cargo/bin/cargo build --manifest-path=h9backend/server/Cargo.toml
-RUN R CMD INSTALL h9backend/r
