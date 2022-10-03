@@ -126,8 +126,8 @@ RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz && \
     rm -rf /Image-ExifTool-12.43
 RUN pip3 install scikit-image pyexiftool
 
-# install r package deps (xml, httr)
-RUN apt install -y libxml2-dev libssl-dev
+# install r package deps (xml, httr, libgdal-dev)
+RUN apt install -y libxml2-dev libssl-dev libgdal-dev
 RUN apt-get install -y pandoc
 
 # install r
