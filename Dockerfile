@@ -1,13 +1,7 @@
 ARG UBUNTU_VERSION=20.04
+ARG CUDA=11.8.0
 
-ARG ARCH=
-ARG CUDA=11.3.1
-FROM nvidia/cuda${ARCH:+-$ARCH}:${CUDA}-cudnn8-runtime-ubuntu${UBUNTU_VERSION} as base
-
-ARG ARCH
-ARG CUDA
-ARG CUDNN=7.6.5.32-1
-ARG LIB_DIR_PREFIX=x86_64
+FROM nvidia/cuda:${CUDA}-base-ubuntu${UBUNTU_VERSION} as base
 
 ARG BUILD_DATE
 ENV BUILD_DATE ${BUILD_DATE:-2019-11-19}
@@ -20,11 +14,6 @@ LABEL org.label-schema.vcs-url="https://github.com/hal9ai/hal9-docker" \
       org.label-schema.vendor="Hal9 Inc" \
       maintainer="Javier Luraschi <info@hal9.ai>" \
       com.nvidia.volumes.needed="nvidia_driver"
-
-ARG DEBIAN_FRONTEND=noninteractive
-# workaround for cuda base image https://forums.developer.nvidia.com/t/invalid-public-key-for-cuda-apt-repository/212901/24
-RUN apt-key del 7fa2af80 && rm /etc/apt/sources.list.d/nvidia-ml.list /etc/apt/sources.list.d/cuda.list
-RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb && dpkg -i cuda-keyring_1.0-1_all.deb
 
 # Locales
 RUN apt-get clean
@@ -160,4 +149,4 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN apt install patchelf
 RUN ln -sf /usr/bin/python3.9 /usr/bin/python3
 RUN python3 -m pip install --upgrade pip
-RUN pip3 install maturin uvicorn pandas statsmodels
+RUN pip3 install maturin uvicorn fastapi pandas statsmodels
