@@ -15,6 +15,8 @@ LABEL org.label-schema.vcs-url="https://github.com/hal9ai/hal9-docker" \
       maintainer="Javier Luraschi <info@hal9.ai>" \
       com.nvidia.volumes.needed="nvidia_driver"
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 # Locales
 RUN apt-get clean
 RUN apt-get update
