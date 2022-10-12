@@ -28,8 +28,8 @@ LABEL org.label-schema.vcs-url="https://github.com/hal9ai/hal9-docker" \
 ARG DEBIAN_FRONTEND=noninteractive
 
 # workaround for cuda base image https://forums.developer.nvidia.com/t/invalid-public-key-for-cuda-apt-repository/212901/24
-# RUN apt-key del 7fa2af80 && rm /etc/apt/sources.list.d/nvidia-ml.list /etc/apt/sources.list.d/cuda.list
-# RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb && dpkg -i cuda-keyring_1.0-1_all.deb
+RUN apt-key del 7fa2af80 && rm /etc/apt/sources.list.d/nvidia-ml.list /etc/apt/sources.list.d/cuda.list
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb && dpkg -i cuda-keyring_1.0-1_all.deb
 
 # Locales
 RUN apt-get clean
