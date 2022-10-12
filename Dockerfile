@@ -160,3 +160,9 @@ RUN yarn --version
 # install rust
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
+
+# backend prereqs
+RUN apt install patchelf
+RUN ln -sf /usr/bin/python3.9 /usr/bin/python3
+RUN python3 -m pip install --upgrade pip
+RUN pip3 install maturin uvicorn pandas statsmodels
