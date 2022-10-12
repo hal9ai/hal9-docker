@@ -1,12 +1,8 @@
 ARG UBUNTU_VERSION=20.04
 
 ARG ARCH=
-# ARG CUDA=11.3.1
-# FROM nvidia/cuda${ARCH:+-$ARCH}:${CUDA}-cudnn8-runtime-ubuntu${UBUNTU_VERSION} as base
-# ARCH and CUDA are specified again because the FROM directive resets ARGs
-# (but their default value is retained if set previously)
-
-FROM ubuntu:${UBUNTU_VERSION}
+ARG CUDA=11.3.1
+FROM nvidia/cuda${ARCH:+-$ARCH}:${CUDA}-cudnn8-runtime-ubuntu${UBUNTU_VERSION} as base
 
 ARG ARCH
 ARG CUDA
@@ -26,7 +22,6 @@ LABEL org.label-schema.vcs-url="https://github.com/hal9ai/hal9-docker" \
       com.nvidia.volumes.needed="nvidia_driver"
 
 ARG DEBIAN_FRONTEND=noninteractive
-
 # workaround for cuda base image https://forums.developer.nvidia.com/t/invalid-public-key-for-cuda-apt-repository/212901/24
 RUN apt-key del 7fa2af80 && rm /etc/apt/sources.list.d/nvidia-ml.list /etc/apt/sources.list.d/cuda.list
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb && dpkg -i cuda-keyring_1.0-1_all.deb
