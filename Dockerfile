@@ -100,7 +100,12 @@ RUN apt install -y software-properties-common
 RUN add-apt-repository -y ppa:deadsnakes/ppa
 RUN apt install -y python3.9
 RUN apt install -y python3-pip
-RUN pip3 install numpy scikit-learn pandas xgboost tensorflow scipy pycaret
+
+# backend prereqs
+RUN apt install patchelf
+RUN ln -sf /usr/bin/python3.9 /usr/bin/python3
+RUN python3 -m pip install --upgrade pip
+RUN pip3 install maturin uvicorn fastapi pandas statsmodels
 
 #install exiftool and python related packages
 RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz && \
@@ -127,6 +132,7 @@ RUN R -e "BiocManager::install('plsmod', ask = FALSE)"
 RUN R -e "torch::install_torch(type='cpu')"
 
 # addon packages
+RUN pip3 install numpy scikit-learn pandas xgboost tensorflow scipy pycaret matplotlib
 RUN pip3 install pandas torch torchvision Pillow transformers keybert pytorch-lightning
 RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly', 'prospectr', 'h2o', 'plumber', 'raster', 'leaflet'))"
 RUN pip3 install prophet statsmodels matplotlib numpy==1.21.4 numba==0.53.0 Flask spacy yfinance mediapipe praw psaw
@@ -146,9 +152,3 @@ RUN yarn --version
 # install rust
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
-
-# backend prereqs
-RUN apt install patchelf
-RUN ln -sf /usr/bin/python3.9 /usr/bin/python3
-RUN python3 -m pip install --upgrade pip
-RUN pip3 install maturin uvicorn fastapi pandas statsmodels
