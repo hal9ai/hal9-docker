@@ -101,22 +101,6 @@ RUN add-apt-repository -y ppa:deadsnakes/ppa
 RUN apt install -y python3.9
 RUN apt install -y python3-pip
 
-# backend prereqs
-RUN apt install patchelf
-RUN ln -sf /usr/bin/python3.9 /usr/bin/python3
-RUN python3 -m pip install --upgrade pip
-RUN pip3 install maturin uvicorn fastapi pandas statsmodels
-
-#install exiftool and python related packages
-RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz && \
-    tar -xzvf Image-ExifTool-12.43.tar.gz && \
-    rm -rf Image-ExifTool-12.43.tar.gz && \
-    cd Image-ExifTool-12.43 && \
-    rm -rf html t Change Makefile.PL MANIFEST META.json META.yml perl-Image-ExifTool.spec README && \
-    mv * /usr/local/bin/ && \
-    rm -rf /Image-ExifTool-12.43
-RUN pip3 install scikit-image pyexiftool
-
 # install r package deps (xml, httr, libgdal-dev)
 RUN apt install -y libxml2-dev libssl-dev libgdal-dev
 RUN apt-get install -y pandoc
@@ -130,6 +114,22 @@ RUN apt install -y build-essential
 RUN R -e "options(repos = c(REPO_NAME = 'https://packagemanager.rstudio.com/all/__linux__/focal/latest')); install.packages(c('jsonlite', 'tidyverse', 'pins', 'torch', 'torchvision', 'tidymodels', 'BiocManager', 'ghql'))"
 RUN R -e "BiocManager::install('plsmod', ask = FALSE)"
 RUN R -e "torch::install_torch(type='cpu')"
+
+# backend prereqs
+RUN apt install patchelf
+RUN ln -sf /usr/bin/python3.9 /usr/bin/python3
+RUN python3 -m pip install --upgrade pip
+RUN pip3 install maturin uvicorn fastapi pandas statsmodels
+
+# install exiftool and python related packages
+RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz && \
+    tar -xzvf Image-ExifTool-12.43.tar.gz && \
+    rm -rf Image-ExifTool-12.43.tar.gz && \
+    cd Image-ExifTool-12.43 && \
+    rm -rf html t Change Makefile.PL MANIFEST META.json META.yml perl-Image-ExifTool.spec README && \
+    mv * /usr/local/bin/ && \
+    rm -rf /Image-ExifTool-12.43
+RUN pip3 install scikit-image pyexiftool
 
 # addon packages
 RUN pip3 install numpy scikit-learn pandas xgboost tensorflow scipy pycaret matplotlib
