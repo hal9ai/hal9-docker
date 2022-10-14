@@ -132,7 +132,6 @@ RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz && \
 RUN pip3 install scikit-image pyexiftool
 
 # addon packages
-RUN apt-get build-dep python-numpy python-scipy
 RUN apt-get libmkl-dev libblis-dev
 RUN pip3 install numpy scikit-learn pandas xgboost tensorflow scipy pycaret matplotlib
 RUN pip3 install pandas torch torchvision Pillow transformers keybert pytorch-lightning
