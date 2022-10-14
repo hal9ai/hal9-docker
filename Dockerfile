@@ -100,6 +100,17 @@ RUN apt install -y software-properties-common
 RUN add-apt-repository -y ppa:deadsnakes/ppa
 RUN apt install -y python3.9
 RUN apt install -y python3-pip
+RUN pip3 install numpy scikit-learn pandas xgboost tensorflow scipy pycaret
+
+#install exiftool and python related packages
+RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz && \
+    tar -xzvf Image-ExifTool-12.43.tar.gz && \
+    rm -rf Image-ExifTool-12.43.tar.gz && \
+    cd Image-ExifTool-12.43 && \
+    rm -rf html t Change Makefile.PL MANIFEST META.json META.yml perl-Image-ExifTool.spec README && \
+    mv * /usr/local/bin/ && \
+    rm -rf /Image-ExifTool-12.43
+RUN pip3 install scikit-image pyexiftool
 
 # install r package deps (xml, httr, libgdal-dev)
 RUN apt install -y libxml2-dev libssl-dev libgdal-dev
@@ -115,29 +126,10 @@ RUN R -e "options(repos = c(REPO_NAME = 'https://packagemanager.rstudio.com/all/
 RUN R -e "BiocManager::install('plsmod', ask = FALSE)"
 RUN R -e "torch::install_torch(type='cpu')"
 
-# backend prereqs
-RUN apt install patchelf
-RUN ln -sf /usr/bin/python3.9 /usr/bin/python3
-RUN python3 -m pip install --upgrade pip
-RUN pip3 install maturin uvicorn fastapi pandas statsmodels
-
-# install exiftool and python related packages
-RUN wget https://exiftool.org/Image-ExifTool-12.43.tar.gz && \
-    tar -xzvf Image-ExifTool-12.43.tar.gz && \
-    rm -rf Image-ExifTool-12.43.tar.gz && \
-    cd Image-ExifTool-12.43 && \
-    rm -rf html t Change Makefile.PL MANIFEST META.json META.yml perl-Image-ExifTool.spec README && \
-    mv * /usr/local/bin/ && \
-    rm -rf /Image-ExifTool-12.43
-RUN pip3 install scikit-image pyexiftool
-
 # addon packages
-RUN apt-get install -y libmkl-dev libblis-dev
-# RUN pip3 install numpy scikit-learn
-RUN pip3 install pandas xgboost tensorflow scipy pycaret matplotlib
 RUN pip3 install pandas torch torchvision Pillow transformers keybert pytorch-lightning
 RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly', 'prospectr', 'h2o', 'plumber', 'raster', 'leaflet'))"
-RUN pip3 install prophet statsmodels matplotlib numpy numba Flask spacy yfinance mediapipe praw psaw
+RUN pip3 install prophet statsmodels matplotlib numpy==1.21.4 numba==0.53.0 Flask spacy yfinance mediapipe praw psaw
 RUN python3 -m spacy download en_core_web_sm
 
 RUN apt install -y default-jre
@@ -154,3 +146,7 @@ RUN yarn --version
 # install rust
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
+
+# backend prereqs
+RUN apt install patchelf
+RUN pip3 install maturin uvicorn fastapi
