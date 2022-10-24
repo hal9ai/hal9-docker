@@ -23,6 +23,11 @@ RUN apt-get update
 RUN apt-get install -y locales
 RUN locale-gen en_US.UTF-8
 
+# Install drivers
+apt update
+apt upgrade
+apt install -y nvidia-driver-520 nvidia-dkms-520
+
 # Needed for string substitution
 SHELL ["/bin/bash", "-c"]
 RUN apt-get update && apt-get install -y --no-install-recommends \
