@@ -23,11 +23,6 @@ RUN apt-get update
 RUN apt-get install -y locales
 RUN locale-gen en_US.UTF-8
 
-# Install drivers
-apt update
-apt upgrade
-apt install -y nvidia-driver-520 nvidia-dkms-520
-
 # Needed for string substitution
 SHELL ["/bin/bash", "-c"]
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -120,6 +115,7 @@ RUN pip3 install scikit-image pyexiftool
 # install r package deps (xml, httr, libgdal-dev)
 RUN apt install -y libxml2-dev libssl-dev libgdal-dev
 RUN apt-get install -y pandoc
+RUN apt install -y libfontconfig1-dev
 
 # install r
 RUN apt install -y dirmngr gnupg apt-transport-https ca-certificates software-properties-common
@@ -133,7 +129,7 @@ RUN R -e "torch::install_torch(type='cpu')"
 
 # addon packages
 RUN pip3 install pandas torch torchvision Pillow transformers keybert pytorch-lightning
-RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly', 'prospectr', 'h2o', 'plumber', 'raster', 'leaflet'))"
+RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly', 'prospectr', 'h2o', 'plumber', 'raster', 'leaflet', 'kable', 'kableExtra'))"
 RUN pip3 install prophet statsmodels matplotlib numpy==1.21.4 numba==0.53.0 Flask spacy yfinance mediapipe praw psaw
 RUN python3 -m spacy download en_core_web_sm
 
