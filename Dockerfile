@@ -150,4 +150,4 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 # backend prereqs
 RUN apt install patchelf
-RUN pip3 install maturin uvicorn fastapi
+RUN pip3 install maturin[patchelf] uvicorn fastapi
