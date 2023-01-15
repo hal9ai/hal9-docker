@@ -25,4 +25,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: hal9ai/hal9-docker:latest,hal9ai/hal9-docker:0.0.6
+          tags: hal9ai/hal9-docker:latest,hal9ai/hal9-docker:0.0.7
