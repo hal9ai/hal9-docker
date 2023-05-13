@@ -42,6 +42,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gzip \
     perl
 
+# install posgresql
+RUN apt-get install postgresql postgresql-contrib
+RUN systemctl start postgresql.service
+
 # chrome headless
 RUN apt-get install -y \
     gconf-service \
@@ -100,7 +104,7 @@ RUN apt install -y software-properties-common
 RUN add-apt-repository -y ppa:deadsnakes/ppa
 RUN apt install -y python3.9
 RUN apt install -y python3-pip
-RUN pip3 install numpy scikit-learn pandas==1.5.2 xgboost tensorflow scipy pycaret
+RUN pip3 install numpy scikit-learn pandas xgboost tensorflow scipy pycaret
 
 #install exiftool and python related packages
 RUN wget https://exiftool.org/Image-ExifTool-12.49.tar.gz && \
