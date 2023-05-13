@@ -43,7 +43,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     perl
 
 # install posgresql
-RUN apt-get install postgresql postgresql-contrib
+RUN apt update
+RUN apt install -y postgresql postgresql-contrib
 RUN systemctl start postgresql.service
 
 # chrome headless
