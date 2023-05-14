@@ -121,7 +121,6 @@ RUN apt install -y r-base
 RUN apt install -y build-essential
 RUN R -e "options(repos = c(REPO_NAME = 'https://packagemanager.rstudio.com/all/__linux__/focal/latest')); install.packages(c('jsonlite', 'tidyverse', 'pins', 'torch', 'torchvision', 'tidymodels', 'BiocManager', 'ghql'))"
 RUN R -e "BiocManager::install('plsmod', ask = FALSE)"
-RUN R -e "torch::install_torch(type='cpu')"
 
 # addon packages
 RUN pip3 install pandas torch torchvision Pillow transformers keybert pytorch-lightning
