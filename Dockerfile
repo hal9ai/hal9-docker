@@ -45,7 +45,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # install posgresql
 RUN apt update
 RUN apt install -y postgresql postgresql-contrib
-RUN service postgresql initdb
 RUN service postgresql start
 
 # chrome headless
