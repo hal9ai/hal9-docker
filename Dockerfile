@@ -106,15 +106,6 @@ RUN add-apt-repository -y ppa:deadsnakes/ppa
 RUN apt install -y python3.9
 RUN apt install -y python3-pip
 RUN pip3 install numpy scikit-learn pandas xgboost tensorflow scipy pycaret
-
-#install exiftool and python related packages
-RUN wget https://exiftool.org/Image-ExifTool-12.62.tar.gz && \
-    tar -xzvf Image-ExifTool-12.49.tar.gz && \
-    rm -rf Image-ExifTool-12.49.tar.gz && \
-    cd Image-ExifTool-12.49 && \
-    rm -rf html t Change Makefile.PL MANIFEST META.json META.yml perl-Image-ExifTool.spec README && \
-    mv * /usr/local/bin/ && \
-    rm -rf /Image-ExifTool-12.49
 RUN pip3 install scikit-image pyexiftool
 
 # install r package deps (xml, httr, libgdal-dev)
