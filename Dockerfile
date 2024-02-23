@@ -1,155 +1,29 @@
-ARG UBUNTU_VERSION=20.04
-ARG CUDA=11.8.0
+FROM hal9ai/hal9-docker:0.1.1 as base
 
-FROM nvidia/cuda:${CUDA}-base-ubuntu${UBUNTU_VERSION} as base
+ARG DRIVER_MAJOR_VERSION="2.6.26"
+ARG DRIVER_MINOR_VERSION=1045
+ARG BUCKET_URI="https://databricks-bi-artifacts.s3.us-east-2.amazonaws.com/simbaspark-drivers/odbc"
+ENV DRIVER_FULL_VERSION=${DRIVER_MAJOR_VERSION}.${DRIVER_MINOR_VERSION}
+ENV FOLDER_NAME=SimbaSparkODBC-${DRIVER_FULL_VERSION}-Debian-64bit
+ENV ZIP_FILE_NAME=${FOLDER_NAME}.zip
+RUN apt-get update -y && \
+    apt-get install -y unzip unixodbc-dev unixodbc build-essential cmake make procps && \
+    wget ${BUCKET_URI}/${DRIVER_MAJOR_VERSION}/${ZIP_FILE_NAME} && \
+    unzip ${ZIP_FILE_NAME} && rm -f ${ZIP_FILE_NAME} && \
+    apt-get install -y ./*.deb
+RUN pip3 install pyodbc
 
-ARG BUILD_DATE
-ENV BUILD_DATE ${BUILD_DATE:-2019-11-19}
-ENV LC_CTYPE=en_US.UTF-8 \
-    LC_ALL=en_US.UTF-8 \
-    LANG=en_US.UTF-8 \
-    TERM=xterm
+RUN pip3 install streamlit==1.15.2 snowflake-connector-python==3.0.2 altair==4.0
+RUN pip3 install --upgrade requests
 
-LABEL org.label-schema.vcs-url="https://github.com/hal9ai/hal9-docker" \
-      org.label-schema.vendor="Hal9 Inc" \
-      maintainer="Javier Luraschi <info@hal9.ai>" \
-      com.nvidia.volumes.needed="nvidia_driver"
+RUN sed -i 's/<head>/<head><script src="..\/..\/h9.runtime.js"><\/script><script src="https:\/\/cdn.jsdelivr.net\/npm\/hal9@0.3.112\/dist\/hal9.min.js"><\/script>/g' /usr/local/lib/python3.8/dist-packages/streamlit/static/index.html 
 
-ARG DEBIAN_FRONTEND=noninteractive
+RUN sed -i 's/<body>/<body>[ Loading ]/g' /usr/local/lib/python3.8/dist-packages/streamlit/static/index.html 
 
-# Locales
-RUN apt-get clean
-RUN apt-get update
-RUN apt-get install -y locales
-RUN locale-gen en_US.UTF-8
+RUN sed -i 's/<\/body>/<style>\.block-container { max-width: none; }<\/style><\/body>/g' /usr/local/lib/python3.8/dist-packages/streamlit/static/index.html 
 
-# Needed for string substitution
-SHELL ["/bin/bash", "-c"]
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    libcurl3-dev \
-    libfreetype6-dev \
-    libhdf5-serial-dev \
-    libzmq3-dev \
-    pkg-config \
-    rsync \
-    software-properties-common \
-    unzip \
-    zip \
-    zlib1g-dev \
-    wget \
-    git \
-    gzip \
-    perl \
-    ca-certificates
-
-# install posgresql
-RUN apt update \
-    && rm -rf /var/lib/apt/lists/*
-RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-RUN sh -c 'wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null'
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7FCC7D46ACCC4CF8
-RUN apt-get update -y
-RUN apt-get install -y postgresql postgresql-client
-RUN service postgresql start
-RUN psql --version
-
-# chrome headless
-RUN apt-get install -y \
-    gconf-service \
-    libasound2 \
-    libatk1.0-0 \
-    libc6 \
-    libcairo2 \
-    libcups2 \
-    libdbus-1-3 \
-    libexpat1 \
-    libfontconfig1 \
-    libgcc1 \
-    libgconf-2-4 \
-    libgdk-pixbuf2.0-0 \
-    libglib2.0-0 \
-    libgtk-3-0 \
-    libnspr4 \
-    libpango-1.0-0 \
-    libpangocairo-1.0-0 \
-    libstdc++6 \
-    libx11-6 \
-    libx11-xcb1 \
-    libxcb1 \
-    libxcomposite1 \
-    libxcursor1 \
-    libxdamage1 \
-    libxext6 \
-    libxfixes3 \
-    libxi6 \
-    libxrandr2 \
-    libxrender1 \
-    libxss1 \
-    libxtst6 \
-    ca-certificates \
-    fonts-liberation \
-    libappindicator1 \
-    libnss3 \
-    lsb-release \
-    xdg-utils \
-    libgbm1 \
-    libgbm-dev
-
-# locales
-RUN apt-get update
-RUN apt-get install -y locales
-
-# upgrade node
-RUN apt-get install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_16.x -o nodesource_setup.sh
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+RUN curl -sL https://deb.nodesource.com/setup_18.x -o nodesource_setup.sh
 RUN bash nodesource_setup.sh
 RUN apt-get install -y nodejs
-
-# install python
-RUN apt update
-RUN apt install -y software-properties-common
-RUN add-apt-repository -y ppa:deadsnakes/ppa
-RUN apt install -y python3.9
-RUN apt install -y python3-pip
-RUN pip3 install numpy scikit-learn pandas xgboost tensorflow scipy pycaret
-RUN pip3 install scikit-image pyexiftool
-
-# install r package deps (xml, httr, libgdal-dev)
-RUN apt install -y libxml2-dev libssl-dev libgdal-dev
-RUN apt-get install -y pandoc
-RUN apt install -y libfontconfig1-dev
-
-# install r
-RUN apt install -y dirmngr gnupg apt-transport-https ca-certificates software-properties-common
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
-RUN add-apt-repository -y 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/'
-RUN apt install -y r-base
-RUN apt install -y build-essential
-RUN R -e "options(repos = c(REPO_NAME = 'https://packagemanager.rstudio.com/all/__linux__/focal/latest')); install.packages(c('jsonlite', 'tidyverse', 'pins', 'torch', 'torchvision', 'tidymodels', 'BiocManager', 'ghql'))"
-RUN R -e "BiocManager::install('plsmod', ask = FALSE)"
-
-# addon packages
-RUN pip3 install pandas torch torchvision Pillow transformers keybert pytorch-lightning
-RUN R -e "options(repos = c(CRAN = 'http://cran.rstudio.com')); install.packages(c('plotly', 'prospectr', 'h2o', 'plumber', 'raster', 'leaflet', 'kable', 'kableExtra', 'tableHTML'))"
-RUN pip3 install prophet statsmodels matplotlib numpy==1.21.4 numba==0.53.0 Flask spacy yfinance mediapipe praw psaw
-RUN python3 -m spacy download en_core_web_sm
-
-RUN apt install -y default-jre
-
-
-# install node
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt update
-RUN apt install -y yarn
-RUN apt install --no-install-recommends -y yarn
-RUN yarn --version
-
-# install rust
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
-
-# backend prereqs
-RUN apt install patchelf
-RUN pip3 install maturin[patchelf]==0.13.7 uvicorn fastapi auto-sklearn
+RUN apt install -y sudo
