@@ -1,0 +1,44 @@
+{
+  "name": "hal9sky",
+  "version": "0.4.5",
+  "scripts": {
+    "build": "rm -rf dist && webpack --mode development",
+    "start": "node ./dist/server.js",
+    "debug": "node --inspect ./dist/server.js",
+    "clean": "rm -rf node_modules"
+  },
+  "engines": {
+    "node": ">=14.16.0",
+    "yarn": ">=1.13.0"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "@types/express-http-proxy": "^1.6.3",
+    "@types/express-serve-static-core": "^4.17.36",
+    "@types/express-ws": "^3.0.1",
+    "@types/js-yaml": "^4.0.5",
+    "@types/node-fetch": "^2.6.4",
+    "@types/request": "^2.48.8",
+    "@types/yargs": "^17.0.24",
+    "chokidar": "^3.6.0",
+    "express": "^4.18.2",
+    "express-http-proxy": "^1.6.3",
+    "express-ws": "^5.0.2",
+    "formidable": "^2.1.1",
+    "js-yaml": "^4.1.0",
+    "node-pty": "^1.0.0",
+    "puppeteer": "^21.7.0",
+    "request": "^2.88.2",
+    "winston": "^3.10.0",
+    "ws": "^8.11.0",
+    "yargs": "^15.4.1"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "9.1.0",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.2.2",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-node-externals": "^3.0.0"
+  }
+}

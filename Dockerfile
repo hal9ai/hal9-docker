@@ -36,3 +36,12 @@ RUN mkdir /hal9
 COPY requirements.txt /hal9
 
 RUN pip3 install -r /hal9/requirements.txt
+
+RUN apt remove yarn
+RUN npm install -g yarn
+
+COPY package.json /hal9
+
+WORKDIR /hal9/
+RUN yarn install
+
