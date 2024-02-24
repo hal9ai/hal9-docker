@@ -1,4 +1,4 @@
-FROM hal9ai/hal9-docker:0.1.1 as base
+FROM python:3.11-slim
 
 RUN apt-get update
 RUN apt-get install -y ca-certificates curl gnupg
@@ -44,4 +44,3 @@ COPY package.json /hal9
 
 WORKDIR /hal9/
 RUN yarn install
-
