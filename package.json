@@ -1,6 +1,6 @@
 {
   "name": "hal9sky",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "scripts": {
     "build": "rm -rf dist && webpack --mode development",
     "start": "node ./dist/server.js",
