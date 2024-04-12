@@ -28,6 +28,6 @@ spacy==3.6.1
 SQLAlchemy==1.4.47
 statsmodels==0.14.0
 streamlit==1.15.2
-torchvision==0.14.1
+torchvision==0.15.2
 xgboost==1.7.6
 yfinance==0.2.27
