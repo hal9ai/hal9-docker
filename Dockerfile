@@ -32,6 +32,8 @@ RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor
     && apt-get update \
     && ACCEPT_EULA=Y apt-get install -y msodbcsql18
 
+RUN apt-get install exiftool
+
 RUN apt-get update \
     && apt-get install -y tdsodbc unixodbc-dev \
     && apt install unixodbc -y \
