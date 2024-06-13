@@ -32,4 +32,3 @@ textract==1.6.5
 torch==2.0.1
 torchvision==0.15.2
 xgboost==1.7.6
-yfinance==0.2.27
