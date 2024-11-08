@@ -4,8 +4,10 @@ click==8.1.7
 db-dtypes==1.1.1
 faker==19.6.2
 groq==0.5.0
-google-auth==2.23.2
-google-cloud-bigquery==3.11.4
+google-api-core==2.22.0
+google-cloud-core==2.4.1
+google-auth==2.36.0
+google-cloud-bigquery==3.26.0
 iobind==0.0.1
 koalas==0.32.0
 matplotlib==3.7.2
@@ -13,7 +15,6 @@ numba==0.60.0
 numpy==1.26
 openai==1.13.3
 oscrypto==1.3.0
-pandas-gbq==0.19.2
 pandas==2.1.1
 plotly==5.16.1
 prophet==1.1.4
