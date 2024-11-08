@@ -38,18 +38,7 @@ langchain==0.1.12
 langchain-core==0.1.32
 langchain-text-splitters==0.0.1
 langchain-openai==0.0.8
-presidio-analyzer
-presidio-anonymizer
-pycld2
 pyexiftool==0.5.5
 python-multipart==0.0.9
 torch==2.0.1
 torchvision==0.15.2
-uvicorn[standard]
-en-core-web-md @ https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.6.0/en_core_web_md-3.6.0-py3-none-any.whl
-es-core-news-md @ https://github.com/explosion/spacy-models/releases/download/es_core_news_md-3.6.0/es_core_news_md-3.6.0-py3-none-any.whl
-fastapi
-aiofiles
-redis
-transformers
-typing
