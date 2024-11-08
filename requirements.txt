@@ -38,7 +38,7 @@ pyexiftool==0.5.5
 python-multipart==0.0.9
 torch==2.0.1
 torchvision==0.15.2
-streamlit==1.15.2
+streamlit==1.39.0
 protobuf==3.20.3
 grpcio_status==1.49.1
 proto-plus==1.24.0
