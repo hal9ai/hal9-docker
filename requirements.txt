@@ -38,9 +38,7 @@ pyexiftool==0.5.5
 python-multipart==0.0.9
 torch==2.0.1
 torchvision==0.15.2
-streamlit==1.39.0
-proto-plus==1.24.0
-googleapis_common_protos==1.61.0
+streamlit
 google-api-core==2.12.0
 google-cloud-core==2.3.3
 google-auth==2.23.4
