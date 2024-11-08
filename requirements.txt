@@ -43,4 +43,4 @@ protobuf
 google-api-core
 google-cloud-core
 google-auth
-google-cloud-bigquery
+google-cloud-bigquery==3.12.0

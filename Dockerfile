@@ -45,7 +45,8 @@ RUN apt-get update \
 RUN mkdir /hal9
 COPY requirements.txt /hal9
 
-RUN pip3 install -r /hal9/requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r /hal9/requirements.txt
 
 RUN apt remove yarn
 RUN npm install -g yarn
