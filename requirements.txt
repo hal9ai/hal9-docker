@@ -39,8 +39,11 @@ python-multipart==0.0.9
 torch==2.0.1
 torchvision==0.15.2
 streamlit==1.15.2
-protobuf
-google-api-core
-google-cloud-core
-google-auth
+protobuf==3.20.3
+grpcio_status==1.48.2
+proto-plus==1.24.0
+googleapis_common_protos==1.61.0
+google-api-core==2.12.0
+google-cloud-core==2.3.3
+google-auth=2.23.4
 google-cloud-bigquery==3.12.0
