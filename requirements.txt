@@ -55,3 +55,14 @@ grpcio
 grpcio-status
 proto-plus
 protobuf
+en-core-web-md @ https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.6.0/en_core_web_md-3.6.0-py3-none-any.whl
+es-core-news-md @ https://github.com/explosion/spacy-models/releases/download/es_core_news_md-3.6.0/es_core_news_md-3.6.0-py3-none-any.whl
+presidio-analyzer
+presidio-anonymizer
+pycld2
+uvicorn[standard]
+fastapi
+aiofiles
+redis
+transformers
+typing
