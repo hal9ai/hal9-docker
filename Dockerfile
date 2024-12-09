@@ -33,14 +33,18 @@ RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor
     && ACCEPT_EULA=Y apt-get install -y msodbcsql18
 
 RUN apt-get update && \
-apt-get install -y exiftool && \
-apt-get clean && \
-rm -rf /var/lib/apt/lists/*
+    apt-get install -y exiftool && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
     && apt-get install -y tdsodbc unixodbc-dev \
     && apt install unixodbc -y \
     && apt-get clean -y
+
+RUN apt-get install -y r-base r-base-dev
+RUN Rscript -e 'install.packages(c("tidyverse", "torch", "torchvision", "filelock", "pins", "plumber"))'
+RUN Rscript -e 'torch::install_torch()'
 
 RUN mkdir /hal9
 COPY requirements.txt /hal9
