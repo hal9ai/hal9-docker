@@ -43,7 +43,7 @@ RUN apt-get update \
     && apt-get clean -y
 
 RUN apt-get install -y r-base r-base-dev
-RUN Rscript -e 'install.packages(c("tidyverse", "torch", "torchvision", "filelock", "pins", "plumber"))'
+RUN Rscript -e 'install.packages(c("tidyverse", "torch", "torchvision", "filelock", "pins", "plumber", "shiny"))'
 RUN Rscript -e 'torch::install_torch()'
 
 RUN mkdir /hal9
