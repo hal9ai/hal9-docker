@@ -69,3 +69,4 @@ aiofiles
 redis
 transformers
 typing
+replicate==1.0.3
