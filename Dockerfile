@@ -58,7 +58,6 @@ COPY requirements.txt /hal9
 RUN pip install --upgrade pip
 RUN pip install -r /hal9/requirements.txt
 
-RUN apt remove yarn
 RUN npm install -g yarn
 
 COPY package.json /hal9
