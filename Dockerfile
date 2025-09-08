@@ -1,4 +1,4 @@
-FROM python:3.11.5-slim
+FROM python:3.11-slim
 
 RUN apt-get update
 RUN apt-get install -y ca-certificates curl gnupg
@@ -47,10 +47,7 @@ RUN apt-get install -y libcurl4-openssl-dev libfontconfig1-dev libxml2-dev libso
 RUN Rscript -e 'install.packages(c("tidyverse", "torch", "torchvision", "filelock", "pins", "plumber", "shiny", "renv"))'
 RUN Rscript -e 'torch::install_torch()'
 
-RUN apt-get update && \
-    apt-get install -y tesseract-ocr tesseract-ocr-eng && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y tesseract-ocr tesseract-ocr-eng
 
 RUN mkdir /hal9
 COPY requirements.txt /hal9
@@ -58,6 +55,7 @@ COPY requirements.txt /hal9
 RUN pip install --upgrade pip
 RUN pip install -r /hal9/requirements.txt
 
+RUN apt remove yarn
 RUN npm install -g yarn
 
 COPY package.json /hal9
